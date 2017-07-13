@@ -51,7 +51,7 @@ func TestBrokenPipeErrorIsNotFatal(t *testing.T) {
 	}
 
 	addr := listener.Addr()
-	t.Logf("address: %s\n", addr)
+	t.Logf("address: %s", addr)
 
 	go func() {
 		// open a client side connection
@@ -97,10 +97,10 @@ func TestBrokenPipeErrorIsNotFatal(t *testing.T) {
 	}
 
 	if netutil.IsNetworkErrorFatal(err) {
-		t.Fatalf("Fatal error: %s\n", err)
+		t.Fatalf("Fatal error: %s", err)
 	}
 
-	t.Logf("non fatal error: %v\n", err)
+	t.Logf("Non fatal error: %v", err)
 
 	err = conn.Close()
 	if err != nil {
