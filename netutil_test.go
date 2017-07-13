@@ -3,11 +3,26 @@ package netutil_test
 import (
 	"bufio"
 	"net"
+	"os"
 	"testing"
 	"time"
 
 	"github.com/knzm/go-netutil"
 )
+
+// Notes:
+// * An empty IP address may not be appropriate in some environments,
+//   such as a docker container.  The 127.0.0.1 is selected just as
+//   a simple default.
+// * The :0 means that one of the available ports is automatically
+//   chosen by the system.
+var ListenAddr = "127.0.0.1:0"
+
+func init() {
+	if a := os.Getenv("NETUTIL_TEST_LISTEN_ADDR"); a != "" {
+		ListenAddr = a
+	}
+}
 
 func TestBrokenPipeErrorIsNotFatal(t *testing.T) {
 	if testing.Short() {
@@ -30,7 +45,7 @@ func TestBrokenPipeErrorIsNotFatal(t *testing.T) {
 	}
 
 	// open a server side connection
-	listener, err := net.Listen("tcp", ":0")
+	listener, err := net.Listen("tcp", ListenAddr)
 	if err != nil {
 		t.Fatal(err)
 	}
