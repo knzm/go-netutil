@@ -29,7 +29,7 @@ func TestBrokenPipeErrorIsNotFatal(t *testing.T) {
 		t.Skip("skip a slow test using real network connections")
 	}
 
-	// A problematic client
+	// an ill-mannered client
 	client := func(conn net.Conn) {
 		// send a request
 		_, err := conn.Write([]byte("ping\n"))
